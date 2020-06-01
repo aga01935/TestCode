@@ -60,7 +60,7 @@ private:
     
     
     
-   /* Double_t            CosThetaHelicityFrame( TLorentzVector muonPositive,
+    Double_t            CosThetaHelicityFrame( TLorentzVector muonPositive,
                                                        TLorentzVector muonNegative,
                                                        TLorentzVector possibleJPsi);
     Double_t            CosThetaCollinsSoper( TLorentzVector muonPositive,
@@ -71,11 +71,11 @@ private:
                                                        TLorentzVector possibleJPsi );
     Double_t            CosPhiCollinsSoper( TLorentzVector muonPositive,
                                                        TLorentzVector muonNegative,
-                                                       TLorentzVector possibleJPsi );*/
+                                                       TLorentzVector possibleJPsi );
     
     
     
-    /*TLorentzVector fdaughter1;
+    /*TLorentzVector fdaughter1; 
     TLorentzVector fdaughter2; 
     TLorentzVector fparent;*/
     
@@ -109,26 +109,26 @@ private:
   //  TH2F*                   fNumberMCMuonsH;	//! count MC muons per event
 	// TH2F*                   fRAbsMuonH; 		//! distribution of RAbsMuon for selected events
 	// TH2F*                   fMuMuMassPtH; 		//! kinematics of dimouns	
-    /*    TH1D*                     fHistRunCounter;
+        TH1D*                     fHistRunCounter;
         TH1D*                     fHistCMUPTriggers;
         TH1D*                     fHistCMUP6Triggers;
         TH1D*                     fHistCMUP10Triggers;
         TH1D*                     fHistCMUP11Triggers;
         TH1D*                     fHistCMUP13Triggers;
         TH1D*                     fHistCMUP26Triggers;
-        TH1I*                     fHistCounter; */
+        TH1I*                     fHistCounter; 
  
  
     std::map<Int_t,Double_t> 	fMapRunAndLumi;
   	std::map<Int_t,Double_t> 	fMapAnalysedMC;
 
 	TTree *fRecTree; 			//! analysis tree
- /* Float_t                 fRecHelicityTheta;
+  Float_t                 fRecHelicityTheta;
   Float_t                 fRecCollinTheta;
   Float_t                 fRecCollinTildePhi;
   Float_t                 fRecHelicityTildePhi;
   Float_t                 fRecHelicityPhi;
-  Float_t                 fRecCollinPhi;*/
+  Float_t                 fRecCollinPhi;
     
  
  
@@ -188,12 +188,12 @@ private:
 //	Float_t fMCMuMuY; 
 //	Float_t fMCMuMuM;
 	
-     //   Float_t                 fMCHelicityTheta;
-    //    Float_t                 fMCCollinTheta;
-     //   Float_t                 fMCCollinTildePhi;
-     //   Float_t                 fMCHelicityTildePhi;
-    //    Float_t                 fMCHelicityPhi;
-    //    Float_t                 fMCCollinPhi;
+        Float_t                 fMCHelicityTheta;
+        Float_t                 fMCCollinTheta;
+        Float_t                 fMCCollinTildePhi;
+        Float_t                 fMCHelicityTildePhi;
+        Float_t                 fMCHelicityPhi;
+        Float_t                 fMCCollinPhi;
   
   
   // Double_t fMCMuPt1; 

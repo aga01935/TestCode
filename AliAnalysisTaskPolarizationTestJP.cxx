@@ -70,7 +70,7 @@ ClassImp(AliAnalysisTaskPolarizationTestJP) // classimp: necessary for root
 // ----------------------------------------------------------------------------------------------------------------------------------
 AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP() : AliAnalysisTaskSE(), 
   fMuonTrackCuts(0x0), fPeriod(0), fTrigger(0), fIsMC(0), fIsScalingOn(0), fAOD(0), fMC(0),
-  // fOutputList(0),
+  fOutputList(0),
   fCounterH(0),
   // fNumberMuonsH(0), fNumberMCMuonsH(0),  
   fMapRunAndLumi(), fMapAnalysedMC(),
@@ -96,7 +96,12 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP() : AliAnal
   //fMCMuMuY(0), fMCMuMuM(0),
   // fMCMuPt1(0), fMCMuPt2(0), fMCMuEta1(0), fMCMuEta2(0), fMCMuPhi1(0), fMCMuPhi2(0), fMCMuPDG1(0), fMCMuPDG2(0),
   fTrgTree(0), fTrgRunNum(0) 
- // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//,fCMUP13(-10),fCMUP26(-10),fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0), fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0),fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0),fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
+ // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//,fCMUP13(-10),fCMUP26(-10)
+ //,fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0)
+ , fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
+ 
+ ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
+ ,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
  , fMCdaughter1(0.,0.,0.,0.), fMCdaughter2(0.,0.,0.,0.) , fMCparent(0.,0.,0.,0.), fRecdaughter1(0.,0.,0.,0.), fRecdaughter2(0.,0.,0.,0.) , fRecparent(0.,0.,0.,0.)
 {
   // default constructor, don't allocate memory here!
@@ -104,7 +109,8 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP() : AliAnal
 }
 // ----------------------------------------------------------------------------------------------------------------------------------
 AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP(const char* name) : AliAnalysisTaskSE(name),
-  fMuonTrackCuts(0x0), fPeriod(0), fTrigger(0), fIsMC(0), fIsScalingOn(0), fAOD(0), fMC(0), fOutputList(0),
+  fMuonTrackCuts(0x0), fPeriod(0), fTrigger(0), fIsMC(0), fIsScalingOn(0), fAOD(0), fMC(0), 
+  fOutputList(0),
   fCounterH(0), 
   //fNumberMuonsH(0), fNumberMCMuonsH(0), 
   fMapRunAndLumi(), fMapAnalysedMC(),
@@ -129,7 +135,12 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP(const char*
  // fMCMuMuY(0), fMCMuMuM(0),
   // fMCMuPt1(0), fMCMuPt2(0), fMCMuEta1(0), fMCMuEta2(0), fMCMuPhi1(0), fMCMuPhi2(0), fMCMuPDG1(0), fMCMuPDG2(0),
   fTrgTree(0), fTrgRunNum(0) 
- // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//, fCMUP13(-10),fCMUP26(-10),fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0), fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0),fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0),fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
+ // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//, fCMUP13(-10),fCMUP26(-10)
+ //,fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0)
+ , fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
+ 
+ ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
+ ,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
  , fMCdaughter1(0.,0.,0.,0.), fMCdaughter2(0.,0.,0.,0.) , fMCparent(0.,0.,0.,0.), fRecdaughter1(0.,0.,0.,0.), fRecdaughter2(0.,0.,0.,0.) , fRecparent(0.,0.,0.,0.)
 {
   // constructor
@@ -150,7 +161,7 @@ AliAnalysisTaskPolarizationTestJP::~AliAnalysisTaskPolarizationTestJP()
   if(fGenTree) {delete fGenTree;}
   if(fTrgTree) {delete fTrgTree;}
   if(fCounterH) {delete fCounterH;}
- /* if(fHistRunCounter) {delete fHistRunCounter;}
+  if(fHistRunCounter) {delete fHistRunCounter;}
   if(fHistCMUPTriggers) {delete fHistCMUPTriggers;}
   if(fHistCMUP6Triggers) {delete fHistCMUP6Triggers;}
   if(fHistCMUP10Triggers) {delete fHistCMUP10Triggers;}
@@ -159,10 +170,10 @@ AliAnalysisTaskPolarizationTestJP::~AliAnalysisTaskPolarizationTestJP()
   if(fHistCMUP26Triggers) {delete fHistCMUP26Triggers;}
   if(fHistCounter) {delete fHistCounter;}
   
-  if(fNumberMuonsH) {delete fNumberMuonsH;}
-  if(fNumberMCMuonsH) {delete fNumberMCMuonsH;}
+  //if(fNumberMuonsH) {delete fNumberMuonsH;}
+  //if(fNumberMCMuonsH) {delete fNumberMCMuonsH;}
   // if(fRAbsMuonH) {delete fRAbsMuonH;}
-  // if(fMuMuMassPtH) {delete fMuMuMassPtH;}*/
+  // if(fMuMuMassPtH) {delete fMuMuMassPtH;}
 }
 // ----------------------------------------------------------------------------------------------------------------------------------
 void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
@@ -240,14 +251,18 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
   
   //my additional branches
   /*fRecTree ->Branch("fCMUP13Decision", &fCMUP13Decision, "fCMUP13Decision/I");
-  fRecTree ->Branch("fCMUP26Decision", &fCMUP26Decision, "fCMUP26Decision/I");
+  fRecTree ->Branch("fCMUP26Decision", &fCMUP26Decision, "fCMUP26Decision/I");*/
   
-  fRecTree ->Branch("fRecCollinTheta", &fRecCollinTheta, "fRecCollinTheta/D");
-  fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/D");
-  fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/D");
-  fRecTree ->Branch("fRecHelicityPhi", &fRecHelicityPhi, "fRecHelicityPhi/D");
-  fRecTree ->Branch("fRecCollinPhi", &fRecCollinPhi, "fRecCollinPhi/D");
-  fRecTree ->Branch("fRecHelicityTildePhi", &fRecHelicityTildePhi, "fRecHelicityTildePhi/D");*/
+  
+ // fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/F");
+  //fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/F");
+  
+  fRecTree ->Branch("fRecHelicityTheta", &fRecHelicityTheta, "fRecHelicityTheta/F");
+  fRecTree ->Branch("fRecHelicityPhi", &fRecHelicityPhi, "fRecHelicityPhi/F");
+  
+  fRecTree ->Branch("fRecCollinTheta", &fRecCollinTheta, "fRecCollinTheta/F");
+  fRecTree ->Branch("fRecCollinPhi", &fRecCollinPhi, "fRecCollinPhi/F");
+  
   
   
   
@@ -286,12 +301,15 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
     
     
     fGenTree ->Branch("fMCMuMuM", &fMCMuMuM, "fMCMuMuM/F");
-    /*fGenTree ->Branch("fMCCollinTheta", &fMCCollinTheta, "fMCCollinTheta/D");
-    fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/D");
-    fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/D");
-    fGenTree ->Branch("fMCHelicityPhi", &fMCHelicityPhi, "fMCHelicityPhi/D");
-    fGenTree ->Branch("fMCCollinPhi", &fMCCollinPhi, "fMCCollinPhi/D");
-    fGenTree ->Branch("fMCHelicityTildePhi", &fMCHelicityTildePhi, "fMCHelicityTildePhi/D");*/
+   
+   // fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/F");
+    //fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/F");
+    fGenTree ->Branch("fMCHelicityTheta", &fMCHelicityTheta, "fMCHelicityTheta/F");
+    fGenTree ->Branch("fMCHelicityPhi", &fMCHelicityPhi, "fMCHelicityPhi/F");
+    
+    fGenTree ->Branch("fMCCollinTheta", &fMCCollinTheta, "fMCCollinTheta/F");
+    fGenTree ->Branch("fMCCollinPhi", &fMCCollinPhi, "fMCCollinPhi/F");
+    
     
     // fGenTree ->Branch("fMCMuPt1", &fMCMuPt1, "fMCMuPt1/D");
     // fGenTree ->Branch("fMCMuPt2", &fMCMuPt2, "fMCMuPt2/D");
@@ -350,7 +368,7 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
  // fOutputList->Add(fNumberMuonsH);        // don't forget to add it to the list!
   
   
- /* fHistRunCounter = new TH1D("fHistRunCounter","Counter", 70000, 240000.5, 310000.5);
+  fHistRunCounter = new TH1D("fHistRunCounter","Counter", 70000, 240000.5, 310000.5);
   fOutputList->Add(fHistRunCounter);
    
    
@@ -365,7 +383,7 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
     fOutputList->Add(fHistCMUP10Triggers);
     fOutputList->Add(fHistCMUP11Triggers);
     fOutputList->Add(fHistCMUP13Triggers);
-    fOutputList->Add(fHistCMUP26Triggers);*/
+    fOutputList->Add(fHistCMUP26Triggers);
   
   
   
@@ -417,12 +435,12 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
   TLorentzVector PosMuon1;
   AliAODTrack *PosTrack = static_cast<AliAODTrack*>(fAOD->GetTrack(idxPosMuons[0]));
   //PosMuon1.SetPtEtaPhiM(PosTrack->Pt(), PosTrack->Eta(), PosTrack->Phi(), MuonMass);
-  fRecdaughter2.SetPtEtaPhiM(PosTrack->Pt(), PosTrack->Eta(), PosTrack->Phi(), MuonMass);
+  fRecdaughter1.SetPtEtaPhiM(PosTrack->Pt(), PosTrack->Eta(), PosTrack->Phi(), MuonMass);
   // --  negative muon
   TLorentzVector NegMuon1;
   AliAODTrack *NegTrack = static_cast<AliAODTrack*>(fAOD->GetTrack(idxNegMuons[0]));
   // NegMuon1.SetPtEtaPhiM(NegTrack->Pt(), NegTrack->Eta(), NegTrack->Phi(), MuonMass);
-//  fRecdaughter1.SetPtEtaPhiM(NegTrack->Pt(), NegTrack->Eta(), NegTrack->Phi(), MuonMass);
+  fRecdaughter2.SetPtEtaPhiM(NegTrack->Pt(), NegTrack->Eta(), NegTrack->Phi(), MuonMass);
   // fill Rabs histo
   // fRAbsMuonH->Fill(PosTrack->GetRAtAbsorberEnd(),NegTrack->GetRAtAbsorberEnd());
   
@@ -434,13 +452,13 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
  // fRecdaughter1 = PosMuon1;
   //fRecdaughter2 = NegMuon1;
   //TLorentzVector MuMu = fRecdaughter1 + fRecdaughter2;
-  fRecparent = fRecdaughter1 + fRecdaughter2;
+   fRecparent = fRecdaughter1 + fRecdaughter2;
   
-   //fRecHelicityTheta= CosThetaHelicityFrame(fRecdaughter1,fRecdaughter2,fRecparent);
-  // fRecCollinTheta= CosThetaCollinsSoper(fRecdaughter1,fRecdaughter2,fRecparent);
+   fRecHelicityTheta= CosThetaHelicityFrame(fRecdaughter1,fRecdaughter2,fRecparent);
+   fRecCollinTheta= CosThetaCollinsSoper(fRecdaughter1,fRecdaughter2,fRecparent);
       
-  // fRecHelicityPhi= CosPhiHelicityFrame(fRecdaughter1,fRecdaughter2,fRecparent);
-  // fRecCollinPhi=  CosPhiCollinsSoper(fRecdaughter1,fRecdaughter2,fRecparent);
+   fRecHelicityPhi= CosPhiHelicityFrame(fRecdaughter1,fRecdaughter2,fRecparent);
+   fRecCollinPhi=  CosPhiCollinsSoper(fRecdaughter1,fRecdaughter2,fRecparent);
   
  // ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
  //,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0),
@@ -455,8 +473,9 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
  // fMuMuPt = MuMu.Pt(); 
   // fMuMuPhi = MuMu.Phi();
  // fMuMuY = MuMu.Rapidity(); 
-  fMuMuM = fRecparent.M();
-
+    
+    fMuMuM = fRecparent.M();
+    cout<<fMuMuM<<endl;
   // fMuPt1 = PosTrack->Pt(); 
   // fMuEta1 = PosTrack->Eta(); 
   // fMuPhi1 = PosTrack->Phi();
@@ -494,11 +513,12 @@ void AliAnalysisTaskPolarizationTestJP::TwoMCMuonAna(Int_t *idxMCPosMuons, Int_t
   fMCdaughter2 = NegMCMuon;
   fMCparent = fMCdaughter1+fMCdaughter2; 
   fMCMuMuM = fMCparent.M();
-//  fMCHelicityTheta= CosThetaHelicityFrame(fMCdaughter1,fMCdaughter2,fMCparent);
-//  fMCCollinTheta= CosThetaCollinsSoper(fMCdaughter1,fMCdaughter2,fMCparent);
-      
- // fMCHelicityPhi= CosPhiHelicityFrame(fMCdaughter1,fMCdaughter2,fMCparent);
- // fMCCollinPhi=  CosPhiCollinsSoper(fMCdaughter1,fMCdaughter2,fMCparent);
+  fMCHelicityTheta= CosThetaHelicityFrame(fMCdaughter1,fMCdaughter2,fMCparent);
+ //cout<<"no problamo"<<endl;
+  fMCCollinTheta= CosThetaCollinsSoper(fMCdaughter1,fMCdaughter2,fMCparent);
+ //cout<<"yes problamo"<<endl;     
+  fMCHelicityPhi= CosPhiHelicityFrame(fMCdaughter1,fMCdaughter2,fMCparent);
+  fMCCollinPhi=  CosPhiCollinsSoper(fMCdaughter1,fMCdaughter2,fMCparent);
 
   // fMCMuPt1 = PosMCPart->Pt(); 
   // fMCMuEta1 = PosMCPart->Eta(); 
@@ -908,6 +928,207 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
   // clean up
   delete [] idxPosMuons;
   delete [] idxNegMuons;
+
+}
+
+Double_t AliAnalysisTaskPolarizationTestJP::CosPhiHelicityFrame(  TLorentzVector muonPositive,
+                                                          TLorentzVector muonNegative,
+                                                          TLorentzVector possibleJPsi )
+{
+  /* - This function computes the helicity phi for the
+     - helicity of the J/Psi.
+     - The idea should be to get back to a reference frame where it
+     - is easier to compute and to define the proper z-axis.
+     -
+   */
+
+  /* - Half of the energy per pair of the colliding nucleons.
+     -
+  */
+  Double_t HalfSqrtSnn   = 2510.;
+  Double_t MassOfLead208 = 193.6823;
+  Double_t MomentumBeam  = TMath::Sqrt( HalfSqrtSnn*HalfSqrtSnn*208*208 - MassOfLead208*MassOfLead208 );
+  /* - Fill the Lorentz vector for projectile and target.
+     - For the moment we do not consider the crossing angle.
+     - Projectile runs towards the MUON arm.
+     -
+   */
+  TLorentzVector pProjCM(0.,0., -MomentumBeam, HalfSqrtSnn*208); // projectile
+  TLorentzVector pTargCM(0.,0.,  MomentumBeam, HalfSqrtSnn*208); // target
+  /* - Translate the dimuon parameters in the dimuon rest frame
+     -
+   */
+  TVector3       beta      = ( -1./possibleJPsi.E() ) * possibleJPsi.Vect();
+  TLorentzVector pMu1Dimu  = muonPositive;
+  TLorentzVector pMu2Dimu  = muonNegative;
+  TLorentzVector pProjDimu = pProjCM;
+  TLorentzVector pTargDimu = pTargCM;
+  pMu1Dimu.Boost(beta);
+  pMu2Dimu.Boost(beta);
+  pProjDimu.Boost(beta);
+  pTargDimu.Boost(beta);
+  //
+  // --- Determine the z axis for the calculation of the AliAnalysisTaskPolarizationTestJP angle
+  // (i.e. the direction of the dimuon in the CM system)
+  //
+  TVector3 zaxis = (possibleJPsi.Vect()).Unit();
+  TVector3 yaxis = ((pProjDimu.Vect()).Cross(pTargDimu.Vect())).Unit();
+  TVector3 xaxis = (yaxis.Cross(zaxis)).Unit();
+  //
+  // --- Calculation of the azimuthal angle (Helicity)
+  //
+  Double_t phi = TMath::ATan2((pMu1Dimu.Vect()).Dot(yaxis),(pMu1Dimu.Vect()).Dot(xaxis));
+  return   phi;
+}      
+      
+
+
+Double_t AliAnalysisTaskPolarizationTestJP::CosPhiCollinsSoper( TLorentzVector muonPositive,
+                                                        TLorentzVector muonNegative,
+                                                        TLorentzVector possibleJPsi )
+{
+  /* - This function computes the Collins-Soper PHI for the
+     - helicity of the J/Psi.
+     - The idea should be to get back to a reference frame where it
+     - is easier to compute and to define the proper z-axis.
+     -
+   */
+
+  /* - Half of the energy per pair of the colliding nucleons.
+     -
+   */
+  Double_t HalfSqrtSnn   = 2510.;
+  Double_t MassOfLead208 = 193.6823;
+  Double_t MomentumBeam  = TMath::Sqrt( HalfSqrtSnn*HalfSqrtSnn*208*208 - MassOfLead208*MassOfLead208 );
+  /* - Fill the Lorentz vector for projectile and target.
+     - For the moment we do not consider the crossing angle.
+     - Projectile runs towards the MUON arm.
+     -
+   */
+  TLorentzVector pProjCM(0.,0., -MomentumBeam, HalfSqrtSnn*208); // projectile
+  TLorentzVector pTargCM(0.,0.,  MomentumBeam, HalfSqrtSnn*208); // target
+  /* - Translate the dimuon parameters in the dimuon rest frame
+     -
+   */
+  TVector3       beta      = ( -1./possibleJPsi.E() ) * possibleJPsi.Vect();
+  TLorentzVector pMu1Dimu  = muonPositive;
+  TLorentzVector pMu2Dimu  = muonNegative;
+  TLorentzVector pProjDimu = pProjCM;
+  TLorentzVector pTargDimu = pTargCM;
+  pMu1Dimu.Boost(beta);
+  pMu2Dimu.Boost(beta);
+  pProjDimu.Boost(beta);
+  pTargDimu.Boost(beta);
+  /* - Determine the z axis for the CS angle.
+     -
+   */
+  TVector3 zaxisCS=(((pProjDimu.Vect()).Unit())-((pTargDimu.Vect()).Unit())).Unit();
+  //
+  // --- Determine the CS angle (angle between mu+ and the z axis defined above)
+  //
+  TVector3 yaxisCS=(((pProjDimu.Vect()).Unit()).Cross((pTargDimu.Vect()).Unit())).Unit();
+  TVector3 xaxisCS=(yaxisCS.Cross(zaxisCS)).Unit();
+
+  Double_t phi = TMath::ATan2((pMu1Dimu.Vect()).Dot(yaxisCS),((pMu1Dimu.Vect()).Dot(xaxisCS)));
+  return   phi;
+}
+
+
+
+Double_t AliAnalysisTaskPolarizationTestJP::CosThetaCollinsSoper( TLorentzVector muonPositive,
+                                                          TLorentzVector muonNegative,
+                                                          TLorentzVector possibleJPsi )
+{
+  /* - This function computes the Collins-Soper cos(theta) for the
+     - helicity of the J/Psi.
+     - The idea should be to get back to a reference frame where it
+     - is easier to compute and to define the proper z-axis.
+     -
+   */
+
+  /* - Half of the energy per pair of the colliding nucleons.
+     -
+   */
+  Double_t HalfSqrtSnn   = 2510.;
+  Double_t MassOfLead208 = 193.6823;
+  Double_t MomentumBeam  = TMath::Sqrt( HalfSqrtSnn*HalfSqrtSnn*208*208 - MassOfLead208*MassOfLead208 );
+  /* - Fill the Lorentz vector for projectile and target.
+     - For the moment we do not consider the crossing angle.
+     - Projectile runs towards the MUON arm.
+     -
+   */
+  TLorentzVector pProjCM(0.,0., -MomentumBeam, HalfSqrtSnn*208); // projectile
+  TLorentzVector pTargCM(0.,0.,  MomentumBeam, HalfSqrtSnn*208); // target
+  /* - Translate the dimuon parameters in the dimuon rest frame
+     -
+   */
+  TVector3       beta      = ( -1./possibleJPsi.E() ) * possibleJPsi.Vect();
+  TLorentzVector pMu1Dimu  = muonPositive;
+  TLorentzVector pMu2Dimu  = muonNegative;
+  TLorentzVector pProjDimu = pProjCM;
+  TLorentzVector pTargDimu = pTargCM;
+  pMu1Dimu.Boost(beta);
+  pMu2Dimu.Boost(beta);
+  pProjDimu.Boost(beta);
+  pTargDimu.Boost(beta);
+  /* - Determine the z axis for the CS angle.
+     -
+   */
+  TVector3 zaxisCS=(((pProjDimu.Vect()).Unit())-((pTargDimu.Vect()).Unit())).Unit();
+  /* - Determine the CS angle (angle between mu+ and the z axis defined above)
+     -
+   */
+  Double_t CosThetaCS = zaxisCS.Dot((pMu1Dimu.Vect()).Unit());
+  return   CosThetaCS;
+}
+
+
+Double_t AliAnalysisTaskPolarizationTestJP::CosThetaHelicityFrame( TLorentzVector muonPositive,
+                                                           TLorentzVector muonNegative,
+                                                           TLorentzVector possibleJPsi )
+{
+  /* - This function computes the Helicity cos(theta) for the
+     - helicity of the J/Psi.
+     - The idea should be to get back to a reference frame where it
+     - is easier to compute and to define the proper z-axis.
+     -
+   */
+
+  /* - Half of the energy per pair of the colliding nucleons.
+     -
+   */
+  Double_t HalfSqrtSnn   = 2510.;
+  Double_t MassOfLead208 = 193.6823;
+  Double_t MomentumBeam  = TMath::Sqrt( HalfSqrtSnn*HalfSqrtSnn*208*208 - MassOfLead208*MassOfLead208 );
+  /* - Fill the Lorentz vector for projectile and target.
+     - For the moment we do not consider the crossing angle.
+     - Projectile runs towards the MUON arm.
+     -
+   */
+  TLorentzVector pProjCM(0.,0., -MomentumBeam, HalfSqrtSnn*208); // projectile
+  TLorentzVector pTargCM(0.,0.,  MomentumBeam, HalfSqrtSnn*208); // target
+  /* - Translate the dimuon parameters in the dimuon rest frame
+     -
+   */
+  TVector3       beta      = ( -1./possibleJPsi.E() ) * possibleJPsi.Vect();
+  TLorentzVector pMu1Dimu  = muonPositive;
+  TLorentzVector pMu2Dimu  = muonNegative;
+  TLorentzVector pProjDimu = pProjCM;
+  TLorentzVector pTargDimu = pTargCM;
+  pMu1Dimu.Boost(beta);
+  pMu2Dimu.Boost(beta);
+  pProjDimu.Boost(beta);
+  pTargDimu.Boost(beta);
+  //
+  // --- Determine the z axis for the calculation of the AliAnalysisTaskPolarizationTestJP angle
+  // (i.e. the direction of the dimuon in the CM system)
+  //
+  TVector3 zaxis = (possibleJPsi.Vect()).Unit();
+  /* - Determine the He angle (angle between mu+ and the z axis defined above)
+     -
+   */
+  Double_t CosThetaHE = zaxis.Dot((pMu1Dimu.Vect()).Unit());
+  return   CosThetaHE;
 
 }
 
