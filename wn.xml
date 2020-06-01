@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<alien>
+  <collection name="find  -l 1  -o 0 /alice/data/2018/LHC18q/000296510 *muon_calo_pass3/AOD225/PWGUD/UD_PbPb_AOD/501_20190723-1440/*AliAOD.UPCNano.root">
+    <event name="1">
+      <file name="AliAOD.UPCNano.root" dir="469389053" lfn="/alice/data/2018/LHC18q/000296510/muon_calo_pass3/AOD225/PWGUD/UD_PbPb_AOD/501_20190723-1440/0001/AliAOD.UPCNano.root" jobid="1559822552" perm="755" owner="alitrain" turl="alien:///alice/data/2018/LHC18q/000296510/muon_calo_pass3/AOD225/PWGUD/UD_PbPb_AOD/501_20190723-1440/0001/AliAOD.UPCNano.root" ctime="2019-07-23 16:51:13" md5="3e3967bf99080df8ec50f7a346af2a10" broken="0" aclId="" guid="2886DF8E-AD59-11E9-BED2-332888D8CF5B" expiretime="" size="194579989" replicated="0" entryId="469389058" gowner="alitrain" />
+    </event>
+    <info comment="Exported XML" />
+</collection>
+</alien>
