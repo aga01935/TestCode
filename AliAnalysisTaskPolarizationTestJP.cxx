@@ -57,6 +57,7 @@
 #include <AliMCParticle.h>
 #include <AliAODInputHandler.h> 
 #include <AliMuonTrackCuts.h>
+#include <AliAODMCParticle.h>
 
 // my headers
 #include "AliAnalysisTaskPolarizationTestJP.h"
@@ -73,7 +74,7 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP() : AliAnal
   fOutputList(0),
   fCounterH(0),
   // fNumberMuonsH(0), fNumberMCMuonsH(0),  
-  fMapRunAndLumi(), fMapAnalysedMC(),
+  fMapRunAndLumi(), fMapAnalysedMC(),//  fBBAFlags(0), fBBAFlagsAD(0),fBBCFlags(0), fBBCFlagsAD(0),
   // fRAbsMuonH(0), fMuMuMassPtH(0),  
   // fZNAEnergyTimingH(0), fZNCEnergyTimingH(0), fZNATDCTimingH(0), fZNCTDCTimingH(0),
   // fZNAEnergyTimingAllH(0), fZNCEnergyTimingAllH(0), fZNATDCTimingAllH(0), fZNCTDCTimingAllH(0),
@@ -89,20 +90,26 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP() : AliAnal
   //fMuMuY(0),
    fMuMuM(0), fMCMuMuM(0),
   // fMuPt1(0), fMuPt2(0), fMuEta1(0), fMuEta2(0), fMuPhi1(0), fMuPhi2(0), fMuQ1(0), fMuQ2(0),
-  //fCMUP6Decision(-10), fCMUP10Decision(-10), fCMUP11Decision(-10),//fCMUP13Decision(-10),fCMUP26Decision(-10),
+  fCMUPDecision(-10),fCMUP6Decision(-10), fCMUP10Decision(-10), fCMUP11Decision(-10),fCMUP13Decision(-10),fCMUP26Decision(-10),
   fGenPart(0), fGenTree(0), fMCRunNum(0),
   // fMCMuMuPt(0),
   // fMCMuMuPhi(0), 
   //fMCMuMuY(0), fMCMuMuM(0),
   // fMCMuPt1(0), fMCMuPt2(0), fMCMuEta1(0), fMCMuEta2(0), fMCMuPhi1(0), fMCMuPhi2(0), fMCMuPDG1(0), fMCMuPDG2(0),
   fTrgTree(0), fTrgRunNum(0) 
- // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//,fCMUP13(-10),fCMUP26(-10)
+  ,fCMUP(-10),fCMUP6(-10), fCMUP10(-10), fCMUP11(-10),fCMUP13(-10),fCMUP26(-10)
  //,fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0)
- , fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
+ , fHistRunCounter(0),fRunNumber(0),fHistTriggers(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
  
  ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
  ,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
  , fMCdaughter1(0.,0.,0.,0.), fMCdaughter2(0.,0.,0.,0.) , fMCparent(0.,0.,0.,0.), fRecdaughter1(0.,0.,0.,0.), fRecdaughter2(0.,0.,0.,0.) , fRecparent(0.,0.,0.,0.)
+
+
+,fSimulated_Reconstructed_Posdaughter(0.,0.,0.,0.),fSimulated_Reconstructed_Negdaughter(0.,0.,0.,0.),fSimulated_Reconstructed_MuMuPair(0.,0.,0.,0.),fSimulated_Reconstructed_MuMuMass(0) 
+
+,fSimulated_Reconstructed_HelicityTheta(0),fSimulated_Reconstructed_CollinTheta(0),fSimulated_Reconstructed_HelicityPhi(0), fSimulated_Reconstructed_CollinPhi(0),fSimulated_Reconstructed_CollinTildePhi(0),fSimulated_Reconstructed_HelicityTildePhi(0)
+ 
 {
   // default constructor, don't allocate memory here!
   // this is used by root for IO purposes, it needs to remain empty
@@ -113,7 +120,7 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP(const char*
   fOutputList(0),
   fCounterH(0), 
   //fNumberMuonsH(0), fNumberMCMuonsH(0), 
-  fMapRunAndLumi(), fMapAnalysedMC(),
+  fMapRunAndLumi(), fMapAnalysedMC(),// fBBAFlags(0), fBBAFlagsAD(0), fBBCFlags(0), fBBCFlagsAD(0),
   // fRAbsMuonH(0), fMuMuMassPtH(0),  
   // fZNAEnergyTimingH(0), fZNCEnergyTimingH(0), fZNATDCTimingH(0), fZNCTDCTimingH(0),
   // fZNAEnergyTimingAllH(0), fZNCEnergyTimingAllH(0), fZNATDCTimingAllH(0), fZNCTDCTimingAllH(0),
@@ -129,19 +136,29 @@ AliAnalysisTaskPolarizationTestJP::AliAnalysisTaskPolarizationTestJP(const char*
  // fMuMuY(0), 
  fMuMuM(0), fMCMuMuM(0),
   // fMuPt1(0), fMuPt2(0), fMuEta1(0), fMuEta2(0), fMuPhi1(0), fMuPhi2(0), fMuQ1(0), fMuQ2(0),
-  //fCMUP6Decision(-10), fCMUP10Decision(-10), fCMUP11Decision(-10),//fCMUP13Decision(-10),fCMUP26Decision(-10),
+  fCMUPDecision(-10),fCMUP6Decision(-10), fCMUP10Decision(-10), fCMUP11Decision(-10),fCMUP13Decision(-10),fCMUP26Decision(-10),
   fGenPart(0), fGenTree(0), fMCRunNum(0), //fMCMuMuPt(0),
   // fMCMuMuPhi(0), 
  // fMCMuMuY(0), fMCMuMuM(0),
   // fMCMuPt1(0), fMCMuPt2(0), fMCMuEta1(0), fMCMuEta2(0), fMCMuPhi1(0), fMCMuPhi2(0), fMCMuPDG1(0), fMCMuPDG2(0),
   fTrgTree(0), fTrgRunNum(0) 
- // ,fCMUP6(-10), fCMUP10(-10), fCMUP11(-10)//, fCMUP13(-10),fCMUP26(-10)
+  ,fCMUP(-10),fCMUP6(-10), fCMUP10(-10), fCMUP11(-10), fCMUP13(-10),fCMUP26(-10)
  //,fHelicityTheta(0),fCollinTheta(0),fCollinTildePhi(0),fHelicityPhi(0),fCollinPhi(0),fHelicityTildePhi(0)
- , fHistRunCounter(0),fRunNumber(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
+
+
+ , fHistRunCounter(0),fRunNumber(0),fHistTriggers(0),fHistCMUPTriggers(0),fHistCMUP6Triggers(0),fHistCMUP10Triggers(0),fHistCMUP11Triggers(0),fHistCMUP13Triggers(0),fHistCMUP26Triggers(0)
  
  ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
  ,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0)
+ 
+ 
  , fMCdaughter1(0.,0.,0.,0.), fMCdaughter2(0.,0.,0.,0.) , fMCparent(0.,0.,0.,0.), fRecdaughter1(0.,0.,0.,0.), fRecdaughter2(0.,0.,0.,0.) , fRecparent(0.,0.,0.,0.)
+ 
+,fSimulated_Reconstructed_Posdaughter(0.,0.,0.,0.),fSimulated_Reconstructed_Negdaughter(0.,0.,0.,0.),fSimulated_Reconstructed_MuMuPair(0.,0.,0.,0.),fSimulated_Reconstructed_MuMuMass(0) 
+
+
+,fSimulated_Reconstructed_HelicityTheta(0),fSimulated_Reconstructed_CollinTheta(0),fSimulated_Reconstructed_HelicityPhi(0), fSimulated_Reconstructed_CollinPhi(0),fSimulated_Reconstructed_CollinTildePhi(0),fSimulated_Reconstructed_HelicityTildePhi(0) 
+ 
 {
   // constructor
   DefineInput(0, TChain::Class());   
@@ -162,6 +179,7 @@ AliAnalysisTaskPolarizationTestJP::~AliAnalysisTaskPolarizationTestJP()
   if(fTrgTree) {delete fTrgTree;}
   if(fCounterH) {delete fCounterH;}
   if(fHistRunCounter) {delete fHistRunCounter;}
+  if(fHistTriggers) {delete fHistTriggers;}
   if(fHistCMUPTriggers) {delete fHistCMUPTriggers;}
   if(fHistCMUP6Triggers) {delete fHistCMUP6Triggers;}
   if(fHistCMUP10Triggers) {delete fHistCMUP10Triggers;}
@@ -244,18 +262,18 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
   // fRecTree ->Branch("fMuQ1", &fMuQ1, "fMuQ1/D");
   // fRecTree ->Branch("fMuQ2", &fMuQ2, "fMuQ2/D");
   
-  
- // fRecTree ->Branch("fCMUP6Decision", &fCMUP6Decision, "fCMUP6Decision/I");
- // fRecTree ->Branch("fCMUP10Decision", &fCMUP10Decision, "fCMUP10Decision/I");
- // fRecTree ->Branch("fCMUP11Decision", &fCMUP11Decision, "fCMUP11Decision/I");
+  fRecTree ->Branch("fCMUPDecision", &fCMUPDecision, "fCMUPDecision/I");
+  fRecTree ->Branch("fCMUP6Decision", &fCMUP6Decision, "fCMUP6Decision/I");
+  fRecTree ->Branch("fCMUP10Decision", &fCMUP10Decision, "fCMUP10Decision/I");
+  fRecTree ->Branch("fCMUP11Decision", &fCMUP11Decision, "fCMUP11Decision/I");
   
   //my additional branches
-  /*fRecTree ->Branch("fCMUP13Decision", &fCMUP13Decision, "fCMUP13Decision/I");
-  fRecTree ->Branch("fCMUP26Decision", &fCMUP26Decision, "fCMUP26Decision/I");*/
+  fRecTree ->Branch("fCMUP13Decision", &fCMUP13Decision, "fCMUP13Decision/I");
+  fRecTree ->Branch("fCMUP26Decision", &fCMUP26Decision, "fCMUP26Decision/I");
   
   
- // fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/F");
-  //fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/F");
+  fRecTree ->Branch("fRecCollinTildePhi", &fRecCollinTildePhi, "fRecCollinTildePhi/F");
+  fRecTree ->Branch("fRecHelicityTildePhi", &fRecHelicityTildePhi, "fRecHelicityTildePhi/F");
   
   fRecTree ->Branch("fRecHelicityTheta", &fRecHelicityTheta, "fRecHelicityTheta/F");
   fRecTree ->Branch("fRecHelicityPhi", &fRecHelicityPhi, "fRecHelicityPhi/F");
@@ -270,6 +288,27 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
   fRecTree->Branch("fRecdaughter2","TLorentzVector",&fRecdaughter2);
   fRecTree->Branch("fRecparent","TLorentzVector",&fRecparent);
   
+  if(fIsMC){
+  fRecTree->Branch("fSimulated_Reconstructed_Posdaughter","TLorentzVector",&fSimulated_Reconstructed_Posdaughter);
+  fRecTree->Branch("fSimulated_Reconstructed_Negdaughter","TLorentzVector",&fSimulated_Reconstructed_Negdaughter);
+  fRecTree->Branch("fSimulated_Reconstructed_MuMuPair","TLorentzVector",&fSimulated_Reconstructed_MuMuPair);
+  fRecTree ->Branch("fSimulated_Reconstructed_MuMuMass", &fSimulated_Reconstructed_MuMuMass, "fSimulated_Reconstructed_MuMuMass/F");
+  
+  
+  
+  
+  
+  fRecTree ->Branch("fSimulated_Reconstructed_CollinTildePhi", &fSimulated_Reconstructed_CollinTildePhi, "fSimulated_Reconstructed_CollinTildePhi/F");
+  
+  fRecTree ->Branch("fSimulated_Reconstructed_HelicityTildePhi", &fSimulated_Reconstructed_HelicityTildePhi, "fSimulated_Reconstructed_HelicityTildePhi/F");
+  
+  fRecTree ->Branch("fSimulated_Reconstructed_HelicityTheta", &fSimulated_Reconstructed_HelicityTheta, "fSimulated_Reconstructed_HelicityTheta/F");
+  fRecTree ->Branch("fSimulated_Reconstructed_HelicityPhi", &fSimulated_Reconstructed_HelicityPhi, "fSimulated_Reconstructed_HelicityPhi/F");
+  
+  fRecTree ->Branch("fSimulated_Reconstructed_CollinTheta", &fSimulated_Reconstructed_CollinTheta, "fSimulated_Reconstructed_CollinTheta/F");
+  fRecTree ->Branch("fSimulated_Reconstructed_CollinPhi", &fSimulated_Reconstructed_CollinPhi, "fSimulated_Reconstructed_CollinPhi/F");
+  
+  }
   
   
   
@@ -302,8 +341,8 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
     
     fGenTree ->Branch("fMCMuMuM", &fMCMuMuM, "fMCMuMuM/F");
    
-   // fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/F");
-    //fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/F");
+    fGenTree ->Branch("fMCHelicityTildePhi", &fMCHelicityTildePhi, "fMCHelicityTildePhi/F");
+    fGenTree ->Branch("fMCCollinTildePhi", &fMCCollinTildePhi, "fMCCollinTildePhi/F");
     fGenTree ->Branch("fMCHelicityTheta", &fMCHelicityTheta, "fMCHelicityTheta/F");
     fGenTree ->Branch("fMCHelicityPhi", &fMCHelicityPhi, "fMCHelicityPhi/F");
     
@@ -328,12 +367,14 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
   ////////////////////////////////////////
   fTrgTree = new TTree("fTrgTree", "fTrgTree");
   if(!fIsMC){
+    
     fTrgTree ->Branch("fTrgRunNum", &fTrgRunNum, "fTrgRunNum/I");
-   // fTrgTree ->Branch("fCMUP6", &fCMUP6, "fCMUP6/I");
-   // fTrgTree ->Branch("fCMUP10", &fCMUP10, "fCMUP10/I");
-  //  fTrgTree ->Branch("fCMUP11", &fCMUP11, "fCMUP11/I");
-  //  fTrgTree ->Branch("fCMUP13", &fCMUP13, "fCMUP13/I");
-    //fTrgTree ->Branch("fCMUP26", &fCMUP26, "fCMUP26/I");
+    fTrgTree ->Branch("fCMUP", &fCMUP, "fCMUP/I");
+    fTrgTree ->Branch("fCMUP6", &fCMUP6, "fCMUP6/I");
+    fTrgTree ->Branch("fCMUP10", &fCMUP10, "fCMUP10/I");
+    fTrgTree ->Branch("fCMUP11", &fCMUP11, "fCMUP11/I");
+    fTrgTree ->Branch("fCMUP13", &fCMUP13, "fCMUP13/I");
+    fTrgTree ->Branch("fCMUP26", &fCMUP26, "fCMUP26/I");
     
     
     // post data
@@ -371,13 +412,14 @@ void AliAnalysisTaskPolarizationTestJP::UserCreateOutputObjects()
   fHistRunCounter = new TH1D("fHistRunCounter","Counter", 70000, 240000.5, 310000.5);
   fOutputList->Add(fHistRunCounter);
    
-   
+    fHistTriggers= (TH1D*)fHistRunCounter->Clone("fHistTriggers");
     fHistCMUPTriggers= (TH1D*)fHistRunCounter->Clone("fHistCMUPTriggers");
     fHistCMUP6Triggers= (TH1D*)fHistRunCounter->Clone("fHistCMUP6Triggers");
     fHistCMUP10Triggers= (TH1D*)fHistRunCounter->Clone("fHistCMUP10Triggers");
     fHistCMUP11Triggers= (TH1D*)fHistRunCounter->Clone("fHistCMUP11Triggers");
     fHistCMUP13Triggers= (TH1D*)fHistRunCounter->Clone("fHistCMUP13Triggers");
     fHistCMUP26Triggers= (TH1D*)fHistRunCounter->Clone("fHistCMUP26Triggers");
+    fOutputList->Add(fHistTriggers);
     fOutputList->Add(fHistCMUPTriggers); 
     fOutputList->Add(fHistCMUP6Triggers);
     fOutputList->Add(fHistCMUP10Triggers);
@@ -429,7 +471,9 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
   TDatabasePDG *pdgdat = TDatabasePDG::Instance();
   TParticlePDG *partMuon = pdgdat->GetParticle(13);
   Double_t MuonMass = partMuon->Mass();
-
+  
+  
+  
   // create all four vectors
   // --  positive muon
   TLorentzVector PosMuon1;
@@ -437,6 +481,8 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
   //PosMuon1.SetPtEtaPhiM(PosTrack->Pt(), PosTrack->Eta(), PosTrack->Phi(), MuonMass);
   fRecdaughter1.SetPtEtaPhiM(PosTrack->Pt(), PosTrack->Eta(), PosTrack->Phi(), MuonMass);
   // --  negative muon
+ 
+
   TLorentzVector NegMuon1;
   AliAODTrack *NegTrack = static_cast<AliAODTrack*>(fAOD->GetTrack(idxNegMuons[0]));
   // NegMuon1.SetPtEtaPhiM(NegTrack->Pt(), NegTrack->Eta(), NegTrack->Phi(), MuonMass);
@@ -459,9 +505,55 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
       
    fRecHelicityPhi= CosPhiHelicityFrame(fRecdaughter1,fRecdaughter2,fRecparent);
    fRecCollinPhi=  CosPhiCollinsSoper(fRecdaughter1,fRecdaughter2,fRecparent);
+   fRecCollinTildePhi = TildePhiCalulator(fRecCollinPhi , fRecCollinTheta);
+   fRecHelicityTildePhi = TildePhiCalulator(fRecHelicityPhi , fRecHelicityTheta);
+   
+   
+   fMuMuM = fRecparent.M();
+  // fMuMuPt = MuMu.Pt(); 
+  // fMuMuPhi = MuMu.Phi();
+  //fMuMuY = MuMu.Rapidity(); 
+   
+  if (fMuMuM ==0) cout<<"reconstruction of parent is not working"<< endl;
+  if(fIsMC) {
   
- // ,fMCHelicityTheta(0),fMCCollinTheta(0),fMCCollinTildePhi(0),fMCHelicityPhi(0),fMCCollinPhi(0),fMCHelicityTildePhi(0)
- //,fRecHelicityTheta(0),fRecCollinTheta(0),fRecCollinTildePhi(0),fRecHelicityPhi(0),fRecCollinPhi(0),fRecHelicityTildePhi(0),
+  TClonesArray *mcarray = (TClonesArray*) fAOD->GetList()->FindObject(AliAODMCParticle::StdBranchName());
+  if(!mcarray) cout<<"no mc array found on mc data "<< endl;
+  
+  AliAODMCParticle *mctrack1 = (AliAODMCParticle*) mcarray->At(PosTrack->GetLabel());
+  AliAODMCParticle *mctrack2 = (AliAODMCParticle*) mcarray->At(NegTrack->GetLabel());
+  
+  
+  
+  fSimulated_Reconstructed_Posdaughter.SetPtEtaPhiM(mctrack1->Pt(), mctrack1->Eta(), mctrack1->Phi(), MuonMass);
+  fSimulated_Reconstructed_Negdaughter.SetPtEtaPhiM(mctrack2->Pt(), mctrack2->Eta(), mctrack2->Phi(), MuonMass);
+  fSimulated_Reconstructed_MuMuPair = fSimulated_Reconstructed_Posdaughter + fSimulated_Reconstructed_Negdaughter;
+  fSimulated_Reconstructed_MuMuMass = fSimulated_Reconstructed_MuMuPair.M();
+  
+  
+  
+  
+  fSimulated_Reconstructed_HelicityTheta= CosThetaHelicityFrame(fSimulated_Reconstructed_Posdaughter,fSimulated_Reconstructed_Negdaughter,fSimulated_Reconstructed_MuMuPair);
+ //cout<<"no problamo"<<endl;
+  
+  
+  fSimulated_Reconstructed_CollinTheta= CosThetaCollinsSoper(fSimulated_Reconstructed_Posdaughter,fSimulated_Reconstructed_Negdaughter,fSimulated_Reconstructed_MuMuPair);
+ //cout<<"yes problamo"<<endl;     
+  
+  
+  fSimulated_Reconstructed_HelicityPhi= CosPhiHelicityFrame(fSimulated_Reconstructed_Posdaughter,fSimulated_Reconstructed_Negdaughter,fSimulated_Reconstructed_MuMuPair);
+  
+  
+  fSimulated_Reconstructed_CollinPhi=  CosPhiCollinsSoper(fSimulated_Reconstructed_Posdaughter,fSimulated_Reconstructed_Negdaughter,fSimulated_Reconstructed_MuMuPair);
+  
+  fSimulated_Reconstructed_CollinTildePhi = TildePhiCalulator(fSimulated_Reconstructed_CollinPhi , fSimulated_Reconstructed_CollinTheta);
+  fSimulated_Reconstructed_HelicityTildePhi = TildePhiCalulator(fSimulated_Reconstructed_HelicityPhi , fSimulated_Reconstructed_HelicityTheta);
+
+  
+  
+  }
+ 
+ 
   
   
   
@@ -470,12 +562,10 @@ void AliAnalysisTaskPolarizationTestJP::TwoMuonAna(Int_t *idxPosMuons, Int_t *id
   // fMuMuMassPtH->Fill(MuMu.M(),MuMu.Pt());
 
   // set tree variables
- // fMuMuPt = MuMu.Pt(); 
-  // fMuMuPhi = MuMu.Phi();
- // fMuMuY = MuMu.Rapidity(); 
+  
     
-    fMuMuM = fRecparent.M();
-    cout<<fMuMuM<<endl;
+    
+   //cout<<fMuMuM<<endl;
   // fMuPt1 = PosTrack->Pt(); 
   // fMuEta1 = PosTrack->Eta(); 
   // fMuPhi1 = PosTrack->Phi();
@@ -519,6 +609,10 @@ void AliAnalysisTaskPolarizationTestJP::TwoMCMuonAna(Int_t *idxMCPosMuons, Int_t
  //cout<<"yes problamo"<<endl;     
   fMCHelicityPhi= CosPhiHelicityFrame(fMCdaughter1,fMCdaughter2,fMCparent);
   fMCCollinPhi=  CosPhiCollinsSoper(fMCdaughter1,fMCdaughter2,fMCparent);
+   fMCCollinTildePhi = TildePhiCalulator(fMCCollinPhi , fMCCollinTheta);
+   fMCHelicityTildePhi = TildePhiCalulator(fMCHelicityPhi , fMCHelicityTheta);
+  
+   
 
   // fMCMuPt1 = PosMCPart->Pt(); 
   // fMCMuEta1 = PosMCPart->Eta(); 
@@ -561,18 +655,24 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
   ////////////////////////////////////////////
   Bool_t IsGoodRun = kFALSE;
 
-
+  fRunNumber = fAOD->GetRunNumber();
+  
+  
+  fHistRunCounter->Fill(fRunNumber);
+  
+  
 // this was causing for histogram not to fill up and if I am specifiying the run number then there is no point in finding good run number here, right?
  /* for(auto i : fMapRunAndLumi){
     if( fAOD->GetRunNumber() == i.first ) IsGoodRun = kTRUE;
     
   }
+  
   if(!IsGoodRun) {
     PostAllData();
-   cout<<"runnumber: " <<fAOD->GetRunNumber()<<"is :,"<<"not a good run"<<endl;
+  
     return;
   }   */          
-   //cout<<"here is working"<<endl;                    
+  //cout<<"here is working"<<endl;                    
   fCounterH->Fill(iSelectionCounter); // Good run selected 3/3
   iSelectionCounter++; 
   fCounterH->GetXaxis()->SetBinLabel(iSelectionCounter,"fMapRunAndLumi");
@@ -586,11 +686,11 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
     scaling = 40000;
   } 
 
-  if(fIsMC && fIsScalingOn && (fMapAnalysedMC[fAOD->GetRunNumber()] > Int_t(fMapRunAndLumi[fAOD->GetRunNumber()]*scaling) ) )  {
+  /*if(fIsMC && fIsScalingOn && (fMapAnalysedMC[fAOD->GetRunNumber()] > Int_t(fMapRunAndLumi[fAOD->GetRunNumber()]*scaling) ) )  {
     cout<<"no mc data"<<endl;
     PostAllData();
     return;
-  }                 
+  }  */               
   fMapAnalysedMC[fAOD->GetRunNumber()]++;
  // cout<<"here is working 2"<<endl;
   ////////////////////////////////////////////
@@ -599,10 +699,12 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
   if(fIsMC){
     fGenPart->Clear("C");
     fMC = dynamic_cast<AliMCEvent*>(MCEvent()); 
-    cout<<"found some mc events"<< endl;
+   // cout<<"found some mc events"<< endl;
     if(!fMC){
       PostAllData();
+    //  cout<<" mc events "<< endl;
       return;
+      
     }  
     fCounterH->Fill(iSelectionCounter); // MC generated event found -/4
     iSelectionCounter++;
@@ -614,7 +716,7 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
       PostAllData();
       return;
     } 
-  //  cout<<"here is working 3"<<endl;
+   // cout<<"here is working 3"<<endl;
     fCounterH->Fill(iSelectionCounter); // At least one MC generated particle -/5
     iSelectionCounter++;
 
@@ -679,13 +781,29 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
   Bool_t isTriggered = kFALSE;
 
   if (fIsMC) {
-    isTriggered = kTRUE; // No trigger required for MC
+    if(IsTriggered()){
+    cout<< "mc trigger is satisfied"<<endl;
+    isTriggered = kTRUE; // Defined the trigger conditions
+    fHistTriggers->Fill(fRunNumber);
+    }
   } else {
-    // ###### CMUP10+CMUP11 triggers    
-  /*  if (fTrigger.Contains("CMUP11")){
+      
+      if (trigger.Contains("CMUP")) {
+        isTriggered = kTRUE;
+        fCMUPDecision = 1;
+        fHistCMUPTriggers->Fill(fRunNumber);
+        fCMUP = 1;
+      } else {
+        fCMUPDecision = 0;
+        fCMUP = 0;
+      }      
+      
+      
+      
       if (trigger.Contains("CMUP11-B-NOPF-MUFAST")) {
         isTriggered = kTRUE;
         fCMUP11Decision = 1;
+        fHistCMUP11Triggers->Fill(fRunNumber);
         fCMUP11 = 1;
       } else {
         fCMUP11Decision = 0;
@@ -697,17 +815,19 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
       if (trigger.Contains("CMUP10-B-NOPF-MUFAST")) {
         isTriggered = kTRUE;
         fCMUP10Decision = 1;
+        fHistCMUP10Triggers->Fill(fRunNumber);
         fCMUP10 = 1;
       } else {
         fCMUP10Decision = 0;
         fCMUP10 = 0;
       }
-    }
+    
     // ###### CMUP6 trigger  
     if (fTrigger.Contains("CMUP6")){
       if (trigger.Contains("CMUP6-B-NOPF-MUFAST")) {
         isTriggered = kTRUE;
         fCMUP6Decision = 1;
+        fHistCMUP6Triggers->Fill(fRunNumber);
         fCMUP6 = 1;
       } else {
         fCMUP6Decision = 0;
@@ -718,6 +838,7 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
       if (trigger.Contains("CMUP13-B-NOPF-MUFAST")) {
         isTriggered = kTRUE;
         fCMUP13Decision = 1;
+        fHistCMUP13Triggers->Fill(fRunNumber);
         fCMUP13 = 1;
       } else {
         fCMUP13Decision = 0;
@@ -731,12 +852,13 @@ void AliAnalysisTaskPolarizationTestJP::UserExec(Option_t *)
       if (trigger.Contains("CMUP26-B-NOPF-MUFAST")) {
         isTriggered = kTRUE;
         fCMUP26Decision = 1;
+        fHistCMUP26Triggers->Fill(fRunNumber);
         fCMUP26 = 1;
       } else {
         fCMUP26Decision = 0;
         fCMUP26 = 0;
       }
-    }  */ 
+    }  
     
     
   }
@@ -1132,7 +1254,59 @@ Double_t AliAnalysisTaskPolarizationTestJP::CosThetaHelicityFrame( TLorentzVecto
 
 }
 
- 
+
+Bool_t AliAnalysisTaskPolarizationTestJP::IsTriggered()
+{
+  /* - This is implemented using Evgeny's Code to create VZero and AD triggers 
+     - I am still trying to figure out properly implementing the CMUP triggers
+   */
+   
+  
+  UShort_t fTriggerAD = fAOD->GetADData()->GetTriggerBits();
+  UShort_t fTriggerVZERO = fAOD->GetVZEROData()->GetTriggerBits();
+  UInt_t fL0inputs = fAOD->GetHeader()->GetL0TriggerInputs();
+  
+  //fTriggerInputsMC[0] = fL0inputs & (1 << 9);   //0VBA VZERO A
+  //fTriggerInputsMC[1] = fL0inputs & (1 << 10);   //0VBC VZERO C
+  
+  
+  Bool_t is0VBAfired = fTriggerVZERO & (1 << 12); //0VBA VZERO A
+  Bool_t is0VBCfired = fTriggerVZERO & (1 << 13); //0VBC VZERO C
+  Bool_t is0UBAfired = fTriggerAD & (1 << 12);   //0UBA ADA
+  Bool_t is0UBCfired = fTriggerAD & (1 << 13);   //0UBC ADC
+  
+  
+  
+  if (!is0VBAfired && !is0UBAfired && !is0UBCfired ) return kTRUE;
+  else return kFALSE;
+
+} 
+
+
+// this is tilde phi calculator  
+
+
+Double_t AliAnalysisTaskPolarizationTestJP::TildePhiCalulator(Double_t phi, Double_t costheta){
+
+  Double_t TildePhi;
+  if(costheta < 0){
+  
+  TildePhi = phi - (3/4) * TMath::Pi();  
+  }
+  else{
+  TildePhi = phi- (1/4) * TMath::Pi();
+
+  }
+
+
+ return TildePhi;
+}
+
+
+
+
+
+
 
 
 

@@ -24,6 +24,10 @@ public:
     virtual void            UserExec(Option_t* option);
     virtual void            Terminate(Option_t* option);
     virtual void   			NotifyRun();								  // Implement the Notify run to search for the new parameters at each new runs
+
+
+
+
 	void 					TwoMuonAna(Int_t *pos, Int_t *neg);			  // Analyses two muons and extracs dimuon information
 	void 					TwoMCMuonAna(Int_t *MCpos, Int_t *MCneg);	  // Analyses two MC muons and extracs MC dimuon information
 	void 					SetPeriod(TString period){fPeriod = period;}  
@@ -72,6 +76,17 @@ private:
     Double_t            CosPhiCollinsSoper( TLorentzVector muonPositive,
                                                        TLorentzVector muonNegative,
                                                        TLorentzVector possibleJPsi );
+                                                       
+                                                       
+   Double_t             TildePhiCalulator(Double_t phi, Double_t costheta);   
+   
+                                                    
+                                                       
+    Bool_t              IsTriggered();
+  //  UInt_t                  fBBAFlags;
+  //  UInt_t                  fBBCFlags;
+  //  UInt_t                  fBBAFlagsAD;
+  //  UInt_t                  fBBCFlagsAD;
     
     
     
@@ -87,6 +102,13 @@ private:
     TLorentzVector fRecdaughter1;
     TLorentzVector fRecdaughter2; 
     TLorentzVector fRecparent;
+    
+    
+    TLorentzVector fSimulated_Reconstructed_Posdaughter; 
+    TLorentzVector fSimulated_Reconstructed_Negdaughter;
+    TLorentzVector fSimulated_Reconstructed_MuMuPair;
+    
+    
     
     
     
@@ -110,6 +132,7 @@ private:
 	// TH2F*                   fRAbsMuonH; 		//! distribution of RAbsMuon for selected events
 	// TH2F*                   fMuMuMassPtH; 		//! kinematics of dimouns	
         TH1D*                     fHistRunCounter;
+        TH1D*                     fHistTriggers;
         TH1D*                     fHistCMUPTriggers;
         TH1D*                     fHistCMUP6Triggers;
         TH1D*                     fHistCMUP10Triggers;
@@ -129,6 +152,16 @@ private:
   Float_t                 fRecHelicityTildePhi;
   Float_t                 fRecHelicityPhi;
   Float_t                 fRecCollinPhi;
+  
+  
+  
+  
+  Float_t fSimulated_Reconstructed_HelicityTheta;
+  Float_t fSimulated_Reconstructed_CollinTheta;
+  Float_t fSimulated_Reconstructed_HelicityPhi;
+  Float_t fSimulated_Reconstructed_CollinPhi;
+  Float_t fSimulated_Reconstructed_CollinTildePhi;
+  Float_t fSimulated_Reconstructed_HelicityTildePhi;
     
  
  
@@ -157,6 +190,7 @@ private:
 	// Double_t fMuMuPhi;
 //	Float_t fMuMuY; 
 	Float_t fMuMuM;
+  Float_t fSimulated_Reconstructed_MuMuMass;
   Float_t fMCMuMuM;
 	// Double_t fMuPt1; 
 	// Double_t fMuPt2;
@@ -166,11 +200,12 @@ private:
 	// Double_t fMuPhi2;
 	// Double_t fMuQ1; 
 	// Double_t fMuQ2;
-/*	Int_t fCMUP6Decision;
+  Int_t fCMUPDecision;
+	Int_t fCMUP6Decision;
 	Int_t fCMUP10Decision;
 	Int_t fCMUP11Decision;
   Int_t fCMUP13Decision;
-  Int_t fCMUP26Decision;*/
+  Int_t fCMUP26Decision;
   Int_t fRunNumber;
 
 	TClonesArray *fGenPart; 	//! MC particle object
@@ -207,13 +242,13 @@ private:
 
 	TTree *fTrgTree; 			//! trigger info tree
 	Int_t fTrgRunNum;
-	
- // Int_t fCMUP6;
-//	Int_t fCMUP10;
-//	Int_t fCMUP11;
-//  Int_t fCMUP13;
- // Int_t fCMUP26;
-//
+	Int_t fCMUP;
+  Int_t fCMUP6;
+	Int_t fCMUP10;
+	Int_t fCMUP11;
+  Int_t fCMUP13;
+  Int_t fCMUP26;
+
 
     AliAnalysisTaskPolarizationTestJP(const AliAnalysisTaskPolarizationTestJP&); // not implemented
     AliAnalysisTaskPolarizationTestJP& operator=(const AliAnalysisTaskPolarizationTestJP&); // not implemented
