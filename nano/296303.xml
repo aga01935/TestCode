@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<alien>
+  <collection name="find  -l 15000  -o 0 /alice/sim/2018/LHC18l7/kCohJpsiToMu/296303 *AliAOD.root">
+    <event name="1">
+      <file name="AliAOD.root" dir="191265637" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/001/AliAOD.root" jobid="1347916292" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/001/AliAOD.root" ctime="2018-12-27 07:16:03" md5="868dc30688b6fd5b04eea4daefcab3b4" broken="0" aclId="" guid="DA987A52-099E-11E9-B372-BB741EDFE487" expiretime="" size="5865305" replicated="0" entryId="191265663" gowner="z2" />
+    </event>
+    <event name="2">
+      <file name="AliAOD.root" dir="191265770" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/002/AliAOD.root" jobid="1347916293" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/002/AliAOD.root" ctime="2018-12-27 07:17:24" md5="067425eae0ecc787173daa2446c2e2c4" broken="0" aclId="" guid="005EDD4E-099F-11E9-BF60-DF41402275D8" expiretime="" size="68760749" replicated="0" entryId="191265844" gowner="z2" />
+    </event>
+    <event name="3">
+      <file name="AliAOD.root" dir="191265636" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/003/AliAOD.root" jobid="1347916294" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/003/AliAOD.root" ctime="2018-12-27 07:16:03" md5="d270a3ce172d3ea106091f3564737821" broken="0" aclId="" guid="D9E0C92A-099E-11E9-B810-C3B14B7C5337" expiretime="" size="11586924" replicated="0" entryId="191265673" gowner="z2" />
+    </event>
+    <event name="4">
+      <file name="AliAOD.root" dir="191265642" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/004/AliAOD.root" jobid="1347916295" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296303/AOD/004/AliAOD.root" ctime="2018-12-27 07:16:14" md5="38180f5c20cdbb749ee2a7a89c76a234" broken="0" aclId="" guid="DE1DDAB4-099E-11E9-AC05-539198C0DB33" expiretime="" size="5869806" replicated="0" entryId="191265695" gowner="z2" />
+    </event>
+    <info comment="Exported XML" />
+</collection>
+</alien>

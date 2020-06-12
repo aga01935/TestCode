@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<alien>
+  <collection name="find  -l 15000  -o 0 /alice/sim/2018/LHC18l7/kCohJpsiToMu/296192 *AliAOD.root">
+    <event name="1">
+      <file name="AliAOD.root" dir="190199782" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296192/AOD/001/AliAOD.root" jobid="1347416336" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296192/AOD/001/AliAOD.root" ctime="2018-12-26 11:55:28" md5="6cbcdd473ede8652468790228a4dd05f" broken="0" aclId="" guid="B6145F0E-08FC-11E9-99C4-BB24644C4B25" expiretime="" size="22930974" replicated="0" entryId="190199958" gowner="z2" />
+    </event>
+    <info comment="Exported XML" />
+</collection>
+</alien>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<alien>
+  <collection name="find  -l 15000  -o 0 /alice/sim/2018/LHC18l7/kCohJpsiToMu/296378 *AliAOD.root">
+    <event name="1">
+      <file name="AliAOD.root" dir="191208007" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/001/AliAOD.root" jobid="1347774076" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/001/AliAOD.root" ctime="2018-12-27 01:50:29" md5="6dbb0d50eae2e7eddbbe0ef314276bb1" broken="0" aclId="" guid="5D3D6A54-0971-11E9-B6DA-43180005C95C" expiretime="" size="28767649" replicated="0" entryId="191208094" gowner="z2" />
+    </event>
+    <event name="2">
+      <file name="AliAOD.root" dir="191209187" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/002/AliAOD.root" jobid="1347774077" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/002/AliAOD.root" ctime="2018-12-27 01:54:52" md5="b2d903ef457bbf2837693b8222711f7f" broken="0" aclId="" guid="F2A55F34-0971-11E9-96B6-97EF7DE76B99" expiretime="" size="160435067" replicated="0" entryId="191209379" gowner="z2" />
+    </event>
+    <event name="3">
+      <file name="AliAOD.root" dir="191208012" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/003/AliAOD.root" jobid="1347774078" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/003/AliAOD.root" ctime="2018-12-27 01:50:40" md5="09c36926bccd2584da167dab17800d6b" broken="0" aclId="" guid="5E3195D4-0971-11E9-82C7-E7870F20E95E" expiretime="" size="17339928" replicated="0" entryId="191208215" gowner="z2" />
+    </event>
+    <event name="4">
+      <file name="AliAOD.root" dir="191208046" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/004/AliAOD.root" jobid="1347774079" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/004/AliAOD.root" ctime="2018-12-27 01:50:30" md5="1d9f98e419cff123383da8fb5d899eb1" broken="0" aclId="" guid="5F5BDEE2-0971-11E9-AEB7-EFBE47357ABE" expiretime="" size="5877322" replicated="0" entryId="191208104" gowner="z2" />
+    </event>
+    <event name="5">
+      <file name="AliAOD.root" dir="191208320" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/005/AliAOD.root" jobid="1347774080" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/005/AliAOD.root" ctime="2018-12-27 01:53:51" md5="b9b609d3332b519910ae4b830d70aaaf" broken="0" aclId="" guid="8639860E-0971-11E9-B384-77AB5D67D721" expiretime="" size="11590854" replicated="0" entryId="191209070" gowner="z2" />
+    </event>
+    <event name="6">
+      <file name="AliAOD.root" dir="191208314" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/006/AliAOD.root" jobid="1347774081" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/006/AliAOD.root" ctime="2018-12-27 01:51:51" md5="b3dda47ef02116a8ea73f98aebecdad4" broken="0" aclId="" guid="8358240E-0971-11E9-A58A-7F187928E501" expiretime="" size="5875907" replicated="0" entryId="191208544" gowner="z2" />
+    </event>
+    <event name="7">
+      <file name="AliAOD.root" dir="191208347" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/007/AliAOD.root" jobid="1347774082" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/296378/AOD/007/AliAOD.root" ctime="2018-12-27 01:52:11" md5="14e4c2d4f521b7984f17a808437bfc1c" broken="0" aclId="" guid="87D200AE-0971-11E9-9C9F-27FEEB4AE65A" expiretime="" size="11600148" replicated="0" entryId="191208656" gowner="z2" />
+    </event>
+    <info comment="Exported XML" />
+</collection>
+</alien>

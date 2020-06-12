@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<alien>
+  <collection name="find  -l 15000  -o 0 /alice/sim/2018/LHC18l7/kCohJpsiToMu/295913 *AliAOD.root">
+    <event name="1">
+      <file name="AliAOD.root" dir="191163329" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/001/AliAOD.root" jobid="1347710553" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/001/AliAOD.root" ctime="2018-12-27 00:16:34" md5="3cf2acaf7e1b5375393f9c3f645c77a5" broken="0" aclId="" guid="385392D4-0964-11E9-83B0-7BA685F43378" expiretime="" size="5850021" replicated="0" entryId="191163513" gowner="z2" />
+    </event>
+    <event name="2">
+      <file name="AliAOD.root" dir="191162073" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/002/AliAOD.root" jobid="1347710554" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/002/AliAOD.root" ctime="2018-12-27 00:14:04" md5="f451de95e4b64b36108350650255236d" broken="0" aclId="" guid="E2B01262-0963-11E9-8E56-BFAF1E5BA526" expiretime="" size="62854166" replicated="0" entryId="191162406" gowner="z2" />
+    </event>
+    <event name="3">
+      <file name="AliAOD.root" dir="191162027" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/003/AliAOD.root" jobid="1347710555" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/003/AliAOD.root" ctime="2018-12-27 00:13:54" md5="8fe83cfa6a0940efcd7b87d396ec0b52" broken="0" aclId="" guid="DFFF09D8-0963-11E9-8E4E-3BDF3E0CA9C3" expiretime="" size="5888251" replicated="0" entryId="191162172" gowner="z2" />
+    </event>
+    <event name="4">
+      <file name="AliAOD.root" dir="191162016" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/004/AliAOD.root" jobid="1347710556" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/004/AliAOD.root" ctime="2018-12-27 00:13:54" md5="061dd4620458c3fe32c8e53073e8b783" broken="0" aclId="" guid="DEE594E0-0963-11E9-8869-0B3A9CCA0183" expiretime="" size="11532463" replicated="0" entryId="191162192" gowner="z2" />
+    </event>
+    <event name="5">
+      <file name="AliAOD.root" dir="191162019" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/005/AliAOD.root" jobid="1347710557" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/005/AliAOD.root" ctime="2018-12-27 00:13:54" md5="d2b0b6da8f24d1763afbdc203282a6e1" broken="0" aclId="" guid="DF4CE820-0963-11E9-A9D0-BB64E2C6A385" expiretime="" size="5862169" replicated="0" entryId="191162204" gowner="z2" />
+    </event>
+    <event name="6">
+      <file name="AliAOD.root" dir="191162815" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/006/AliAOD.root" jobid="1347710558" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/006/AliAOD.root" ctime="2018-12-27 00:14:54" md5="b77144110d832c071636c5b7d802c5e5" broken="0" aclId="" guid="0655D13E-0964-11E9-A876-8F00871484D4" expiretime="" size="11570019" replicated="0" entryId="191162921" gowner="z2" />
+    </event>
+    <event name="7">
+      <file name="AliAOD.root" dir="191162020" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/007/AliAOD.root" jobid="1347710559" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/007/AliAOD.root" ctime="2018-12-27 00:13:54" md5="b8935824a10ab2b4f60300556635b054" broken="0" aclId="" guid="DF5CD096-0963-11E9-B51F-2F773730B76B" expiretime="" size="11565093" replicated="0" entryId="191162222" gowner="z2" />
+    </event>
+    <event name="8">
+      <file name="AliAOD.root" dir="191163301" lfn="/alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/008/AliAOD.root" jobid="1347710560" perm="755" owner="aliprod" turl="alien:///alice/sim/2018/LHC18l7/kCohJpsiToMu/295913/AOD/008/AliAOD.root" ctime="2018-12-27 00:17:24" md5="72552627284649b076f6aa49659f09ad" broken="0" aclId="" guid="34BE285A-0964-11E9-AA91-E78C3A1A0AA6" expiretime="" size="22927530" replicated="0" entryId="191163950" gowner="z2" />
+    </event>
+    <info comment="Exported XML" />
+</collection>
+</alien>
