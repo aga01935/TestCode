@@ -24,25 +24,25 @@ def cball(x,par):
   C= math.exp(-(A*A)/(2*par[1]*par[1]))
   D = -par[2]
   E = par[3]
-  
-  if abs(par[2])<100 and abs(A)<100 and abs(E)<100: #this if statement is due to the limitation of the 
-                                      #python as it can not calculate higher math.exponential 
+
+  if abs(par[2])<100 and abs(A)<100 and abs(E)<100 and A>0 : #this if statement is due to the limitation of the
+                                      #python as it can not calculate higher math.exponential
                                       #hence we limited the math.exponential to avoid error of being out of limit
-    if x[0]<(par[0]-(par[1]*par[2])) and A>0:
-          
+    if x[0]<(par[0]-(par[1]*par[2])) :
+
      # try:
       #  A**(-E)
    #   except:
      #   print ("A: ",  A , ", E: " , E)
       cb = A**(-E)
-     
+
     else:
       cb =  B*C
-  else: # this is for the situation when the math.exponential goes out of limit of python 
-   cb = 0   
+  else: # this is for the situation when the math.exponential goes out of limit of python
+   cb = 0
   return cb
-  
-  
+
+
 #bakground function
 def tail(x,par):
   A = par[0]*x[0]
@@ -53,11 +53,11 @@ def tail(x,par):
       pol = math.exp(A)*(1+ par[1]*C*C +par[2]*C*C*C+par[3]*C*C*C*C)
     else:
       pol = math.exp(A)
-        
+
   else:
     pol =0
   return pol
-    
+
 #combined function with both signal and background
 
 def sig_bkg(x,par):
@@ -71,35 +71,117 @@ def sig_bkg(x,par):
   H = (x[0]-G)
   if abs(A)<100 and abs(F)<100 and abs((par[2])<100) and abs(E)<100 and A>0:
     if x[0]<(par[0]-par[1]*par[2]):
+
       if x[0]<B:
-       
+
         combined = A**(-E)+ math.exp(F)*(1+ par[5]*H*H +par[6]*H*H*H+par[7]*H*H*H*H)
       else:
-        
+
         combined = A**(-E)+ math.exp(F)
     else:
       if  x[0]<B:
         combined =  B*C +math.exp(F)*(1+ par[5]*H*H +par[6]*H*H*H+par[7]*H*H*H*H)
       else:
         combined = B*C +math.exp(F)
-  else: 
+  else:
     combined = 0
-  
-  
+
+
 
   return combined
-  
+
+
+
+
+def sigandbkg(x,par):
+
+    A = x[0]-par[0]
+    B = 1/(math.sqrt(2)*math.pi*par[1])
+    C= math.exp(-(A*A)/(2*par[1]*par[1]))
+    #D = -par[2]
+    E = par[3]
+    F = par[4]*x[0]
+    G = 4
+    H = (x[0]-G)
+    I = x[0]-par[8]
+
+    #print (math.sqrt(2)*math.pi*par[9])
+    J = 1/(math.sqrt(2)*math.pi*par[9])
+
+    K = math.exp(-(A*A)/(2*par[9]*par[9]))
+    #N = -par[10]
+    M = par[11]
+    O = math.exp(F)
+    P = (1+ par[5]*H*H +par[6]*H*H*H+par[7]*H*H*H*H)
+    if abs(A)<100 and abs(F)<100 and abs((par[2])<100) and abs(E)<100 and A>0 and abs(I)<100 and I>0 and abs(M)<100 and I>0 :
+
+        if x[0]<(par[0]-par[1]*par[2]):
+            if x[0]<(par[8]-par[9]*par[10]):
+                if x[0]< G:
+                    combined2 = A**(-E)+ I**(-M)+O*P
+                else:
+                    combined2 = A**(-E)+ I**(-M)+O
+
+            else:
+                if x[0]< G:
+                    combined2 = A**(-E)+J*K + O*P
+                else:
+                    combined2 = A**(-E)+J*K + O
+        else:
+            if x[0]<(par[8]-par[9]*par[10]):
+                if x[0]< G:
+
+                    combined2 = B*C+ I**(-M)+O*P
+                else:
+                    combined2 = B*C+ I**(-M)+O
+
+
+            else:
+                if x[0]< G:
+                    #combined2 = B*C+J*K + O*P
+                    combined2 = B*C+ O*P
+                else:
+                    #combined2 = B*C+J*K + O
+                    combined2 = B*C+ O
+    else:
+        combined2 = 0
+    return combined2
+
+
+
+
+
+
+
+
+
 tail_func = TF1("tail_func",tail,4,10,4)
-sig_func =  TF1("sig_func",cball,2.9,3.2,4) 
-comb_func = TF1("comb_func",sig_bkg,0,10,9)
+sig_func =  TF1("sig_func",cball,2,4,4)
+sig_func2 =  TF1("sig_func2",cball,4,10,4)
+
+
+
+tail_func_mc = TF1("tail_func_mc",tail,4,10,4)
+sig_func_mc_jpsi =  TF1("sig_func_mc_jpsi",cball,2.9,3.2,4)
+sig_func_mc_psi =  TF1("sig_func_mc_psi",cball,2.9,3.2,4)
+#comb_func_mc_jpsi = TF1("comb_func_mc_jpsi",sig_bkg,0,10,9)
+#comb_func = TF1("comb_func",sig_bkg3,0,10,11)
+comb_func = TF1("comb_func",sigandbkg,0,10,12)
+#tail_func_mc_psi = TF1("tail_func_mc_psi",tail,4,10,4)
+
+#comb_func_mc_psi = TF1("comb_func_mc_psi",sig_bkg,0,10,9)
+
+#final_sig_bkg_func = TF1("final_sig_func",sig_func(0)+sign_func2(4)+tail_func(8))
 
 
 
 
- 
-
+comb_func.SetParameters(1,2,2,3,4,5,6,7,8,9,10)
 
 sig_func.SetParameters(1,3,2,2)
+sig_func2.SetParameters(1,3,2,2)
+sig_func_mc_psi.SetParameters(1,3,2,2)
+sig_func_mc_jpsi.SetParameters(1,3,2,2)
 tail_func.SetParameters(1,3,2,2)
 #comb_func.SetParameters(3,1,1,1,1,1,1,1,2)
 #comb_func.SetParameter(0,3)
@@ -142,7 +224,7 @@ gau2.SetLineColor(5)
 cryst = TF1("cryst","crystalball",1.002,1.028)
 cryst2 = TF1("cryst2","crystalball",0.98,1.032)
 cryst2.SetLineColor(rt.kBlack)
-#gau = TF1("gau","[0]*math.exp(-0.5*((x-[1])/[2])^2)",0.95,1.05) 
+#gau = TF1("gau","[0]*math.exp(-0.5*((x-[1])/[2])^2)",0.95,1.05)
 ep = TF1("ep","math.expo",2,3)
 ep.SetLineColor(rt.kGreen)
 ep2 = TF1("ep2","math.expo(0)+math.expo(2)",1.01,1.1)
@@ -152,12 +234,12 @@ poly1 = TF1("poly1","pol1",1.05,1.2)
 poly1.SetLineColor(rt.kGreen)
 poly.SetLineColor(rt.kGreen)
 tp = TF1("tp","gaus(0)",0,1.2)
-#Combined = TF1("Combined","[0]* math.exp(-0.5*((x-[1])/[2])^2)+[3]*math.exp(-[4]*x)",0.9,1.2) 
-Combined = TF1("Combined","gaus(0)+ math.expo(3)",0.98,1.8) 
+#Combined = TF1("Combined","[0]* math.exp(-0.5*((x-[1])/[2])^2)+[3]*math.exp(-[4]*x)",0.9,1.2)
+Combined = TF1("Combined","gaus(0)+ math.expo(3)",0.98,1.8)
 Combined2 = TF1("Combined2","gaus(0)+pol2(3)",0.98,1.8)
 Combined3 =  TF1("Combined3","crystalball(0)+math.expo(5)",0.98,1.8)
 Combined4 = TF1("Combined4","gaus(0)+gaus(3)+math.expo(6)",0.98,1.8)
-Combined5 = TF1("Combined5","gaus(0)+ math.expo(3)",0.98,3) 
+Combined5 = TF1("Combined5","gaus(0)+ math.expo(3)",0.98,3)
 
 
 Mass_Fit = TCanvas("Mass_Fit","Mass_Fit",600,300,700,527)
@@ -279,7 +361,7 @@ poly2.FixParameter(2,poly.GetParameter(2))
 #poly2.FixParameter(4,Combined2.GetParameter(7))
 #poly2.FixParameter(5,Combined2.GetParameter(8))
 #poly2.FixParameter(6,Combined2.GetParameter(9))
-#poly2.Draw("SAME") 
+#poly2.Draw("SAME")
 
 gau5 = TF1("gau5","gaus",1.002,1.035)
 gau5.FixParameter(0,Combined2.GetParameter(0))
@@ -419,4 +501,3 @@ vars = globals()
 vars.update(locals())
 shell = code.InteractiveConsole(vars)
 shell.interact()
-
