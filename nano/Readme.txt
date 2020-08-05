@@ -1,11 +1,17 @@
-Trrigger Selection
+################Trrigger Selection#############################
 
 
 Trigger Class
+
+
 CMUP10-B-NOPF-MUFAST    	runs 244980-245542
+
 CMUP11-B-NOPF-MUFAST 	runs 245543-297595
+
 CMUP13-B-NOPF-MUFAST 	runs 246844-246994
+
 CMUP26-B-NOPF-MUFAST 	runs 295585-297595
+
 CMUP6-B-NOPF-MUFAST	runs 295585-297595
 Exactly 2 tracks 
 Opposite charge
