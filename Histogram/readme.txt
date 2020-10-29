@@ -1,3 +1,5 @@
+Counter_Histogram_SideBySide.jpg have the histogram created by my code and Simone's Code
+CompareTable_1.jpg has table with some selection and their respective number of events
 
 AnalysisResults.root
 Have TDirectory named………. PolarizationJP
